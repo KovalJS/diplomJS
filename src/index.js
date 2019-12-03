@@ -10,8 +10,11 @@ import 'fetch-polyfill';
 
 import headMenu from './modules/headMenu';
 import togglePopup from './modules/togglePopup';
+import sendForm from './modules/sendForm';
 
 ////Выподающее меню
 headMenu();
 //popup
 togglePopup(); 
+//sendForm-ajax
+sendForm();
