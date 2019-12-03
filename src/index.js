@@ -11,6 +11,7 @@ import 'fetch-polyfill';
 import headMenu from './modules/headMenu';
 import togglePopup from './modules/togglePopup';
 import sendForm from './modules/sendForm';
+import present from './modules/present';
 
 ////Выподающее меню
 headMenu();
@@ -18,3 +19,5 @@ headMenu();
 togglePopup(); 
 //sendForm-ajax
 sendForm();
+//подарок
+present();
