@@ -12,8 +12,9 @@ import headMenu from './modules/headMenu';
 import togglePopup from './modules/togglePopup';
 import sendForm from './modules/sendForm';
 import present from './modules/present';
+import mainSlider from './modules/mainSlider';
 
-////Выподающее меню
+//Выподающее меню
 headMenu();
 //popup
 togglePopup(); 
@@ -21,3 +22,5 @@ togglePopup();
 sendForm();
 //подарок
 present();
+//главный слайдер
+mainSlider();
