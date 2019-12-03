@@ -8,7 +8,7 @@ const sendForm = () => {
         for (let elem of item.elements) {
             elem.required = '';
             elem.addEventListener('input', () => {
-                if (elem.name === 'name' || elem.name === 'message') {
+                if (elem.name === 'name' && elem.placeholder !== 'Промокод'|| elem.name === 'message') {
                     elem.value = elem.value.replace(/[^а-яё\s]/ig, '');
                 }
             });  
@@ -26,7 +26,7 @@ const sendForm = () => {
             } else if (elem.name === 'phone' || patternPhone.test(elem.value)) {
                 elem.classList.remove('error');
                 return true;
-            } else if (elem.name === 'name' && elem.value.trim() === '') {
+            } else if (elem.name === 'name' && elem.placeholder !== 'Промокод' && elem.value.trim() === '') {
                 event.preventDefault();
                 return false;
             } else if (elem.name === 'message' && elem.value.trim() === '') {
@@ -49,7 +49,24 @@ const sendForm = () => {
             }
         `;
     };
-    applyStyle();    
+    applyStyle(); 
+    
+    const confirmError = (target) => {
+        if (!target.querySelector('.confirm-error')) {
+            const personalData = target.querySelector('.personal-data');
+            let confirmDiv = document.createElement('div');
+            confirmDiv.classList.add('confirm-error');
+            confirmDiv.textContent = 'Необходимо подтвердить согласие!';
+            confirmDiv.style.cssText = `font-size: 1rem; color: red;`;
+            personalData.insertAdjacentElement('afterend', confirmDiv);
+        } 
+    };
+
+    const confirmSuccess = (target) => {
+        if(target.querySelector('.confirm-error')) {
+            target.querySelector('.confirm-error').remove();
+        }
+    };
      
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = 'font-size: 2rem; color: #ffd11a';
@@ -57,36 +74,45 @@ const sendForm = () => {
     const sendingForm = () => {
         document.querySelectorAll('form').forEach((forma) => {
             forma.addEventListener('submit', (event) => {
+                let target = event.target;
+                const checkboxElem = target.querySelector('input[type="checkbox"]'),
+                    radioElem = target.querySelector('input[type="radio"]'),
+                    thanksModalWindow = document.querySelector('#thanks'),
+                    thanksFormContent = thanksModalWindow.querySelector('.form-content');
                 
-                const checkboxElem = event.target.querySelector('input[type="checkbox"]');
+                event.preventDefault();
+                const formData = new FormData(forma);
+                let body = {},
+                    i = 0;
         
                 if (!valid(event)) {
                     return;
                 }                
-            
-                event.preventDefault();
-                forma.appendChild(statusMessage);
-                statusMessage.textContent = loadMessage;
-                const formData = new FormData(forma);
-                let body = {},
-                    i = 0;
-
                     
                 formData.forEach((val, key) => {
                     if (key !==  'form_name') {
                         if (key === 'name') {
-                            body[key + i] = val;
-                            i++;
+                            if (val) {
+                                body[key + i] = val;
+                                i++;
+                            }
                         } else {
                             body[key] = val;
                         }
                     } 
                 });
 
-                if (checkboxElem && checkboxElem.checked) {
+                if (checkboxElem && checkboxElem.checked === true) {
                     body[checkboxElem.type] = checkboxElem.value;
+                    statusMessage.textContent = loadMessage;
+                } else if (checkboxElem && !checkboxElem.checked){
+                    confirmError(target);
+                    return;
                 }
-                
+
+                confirmSuccess(target);
+                forma.appendChild(statusMessage);
+
                 postData(body)
                     .then ((response) => {
                         if (response.status !== 200) {
@@ -101,26 +127,36 @@ const sendForm = () => {
                             color: #ffd11a; 
                             text-transform: uppercase;`;                    
                         } else {
-                            statusMessage.textContent = successMessage;
+                            thanksModalWindow.style.display = 'block';
                         
                             [...forma.elements].forEach((item) => {
                                 item.value = '';
                             });
                         }
 
-                        
+                        statusMessage.textContent = '';
                     })
                     .catch((error) => {
                         if (forma.id === 'form2' || forma.id === 'form1') {
                             forma.innerHTML = `<h4>Записаться на визит</h4>
-                                                <p>${errorMessage}</p>`;
-                            forma.querySelector('p').style.cssText = `
+                                                <p>${errorMessage}</p>
+                                                <p>Отправка не удалась!</p>`;
+                            forma.style.cssText = `
                             font-size: 21px;
                             color: #ffd11a; 
                             text-transform: uppercase;`;                    
                         } else {
-                            statusMessage.textContent = errorMessage;
+                            thanksModalWindow.style.display = 'block';
+                            
+                            thanksFormContent.innerHTML = `<h4>Ошибка</h4>
+                                                        <p>Отправка не удалась!</p>`;
+
+                            thanksFormContent.style.cssText = `
+                            font-size: 21px;
+                            color: #ffd11a; 
+                            display: block;`;                            
                         }
+                        statusMessage.textContent = '';
                     }); 
             });
         });

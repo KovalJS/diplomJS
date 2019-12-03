@@ -20,7 +20,9 @@ const togglePopup = () => {
             
             if (target.className === 'close_icon') {
                 item.style.display = 'none';
-            } else {
+            } else if (target.className === 'btn close-btn') {
+                item.style.display = 'none';
+            }else {
                 target = target.closest('.form-content');
             
                 if(!target) {

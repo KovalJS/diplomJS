@@ -7,8 +7,6 @@ const mainSlider = () => {
     const autoPlaySlide = () => {
         slide[currentSlide].style.display = 'none';
         currentSlide++;
-        console.log(slide.length);
-        console.log(currentSlide);
         if (currentSlide >= slide.length) {
             currentSlide = 0;
         }
