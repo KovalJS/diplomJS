@@ -1,4 +1,4 @@
-const carousel = () => {
+const sliderСarousel = () => {
     const services = document.querySelector('#services'),
         wrapper = services.querySelector('.wrapper'),
         servicesSlider = document.querySelector('.services-slider'),
@@ -37,8 +37,7 @@ const carousel = () => {
     buttonCarusel();
 
     const response = () => {
-        const slidesToShowDefault = slidesToShow,
-            responsive = [{
+        const responsive = [{
                     breckpoint: 1175,
                     slideToShow: 3
                 },
@@ -169,8 +168,6 @@ const carousel = () => {
             } else {
                 servicesSlider.style.transition = 'transform 0.5s';
             }
-            console.log(position);
-            console.log(slide.length - slidesToShow);
             servicesSlider.style.transform = `translateX(-${position * widthSlide}%)`;
             if (position === 0) {
                 setTimeout(timeNext);
@@ -180,8 +177,7 @@ const carousel = () => {
 
     prev.addEventListener('click', prevSlider);
     next.addEventListener('click', nextSlider);
-
     
 };
 
-export default carousel;
+export default sliderСarousel;
