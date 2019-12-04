@@ -15,6 +15,7 @@ import present from './modules/present';
 import mainSlider from './modules/mainSlider';
 import sliderСarousel from './modules/sliderСarousel';
 import photoGallery from './modules/photoGallery';
+import calc from './modules/calc';
 
 //Выподающее меню
 headMenu();
@@ -30,3 +31,5 @@ mainSlider();
 sliderСarousel();
 //фотогалерея
 photoGallery();
+//калькулятор
+calc();
