@@ -4,9 +4,13 @@ const burgerMenu = () => {
         topMenu = document.querySelector('.top-menu'),
         imgBurger = topMenu.querySelector('img'),
         popupMenu = document.querySelector('.popup-menu'),
-        imgPopupMenu = popupMenu.querySelector('img');
+        imgPopupMenu = popupMenu.querySelector('img'),
+        headSlider = headerMain.querySelector('.head-slider'),
+        totop = document.querySelector('#totop');
     let head = document.querySelector('.head'),
         headHiight = head.clientHeight,
+        topMenuHeight = topMenu.clientHeight,
+        headSliderHeight = headSlider.clientHeight,
         burgerWidthWindow = document.documentElement.clientWidth;
     
     window.addEventListener('resize', () => {
@@ -32,6 +36,10 @@ const burgerMenu = () => {
             topMenu.style.cssText = `
                 position: none;
             `;
+        } else if (windowHeight >= (headHiight + topMenuHeight + headSliderHeight)) {
+            totop.style.display = 'block';
+        } else if (windowHeight < (headHiight + topMenuHeight + headSliderHeight)) {
+            totop.style.display = 'none';
         }
     });
 
