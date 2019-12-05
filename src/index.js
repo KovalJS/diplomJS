@@ -16,6 +16,7 @@ import mainSlider from './modules/mainSlider';
 import sliderСarousel from './modules/sliderСarousel';
 import photoGallery from './modules/photoGallery';
 import calc from './modules/calc';
+import burgerMenu from './modules/burgerMenu';
 
 //Выподающее меню
 headMenu();
@@ -33,3 +34,5 @@ sliderСarousel();
 photoGallery();
 //калькулятор
 calc();
+//Бургер меню
+burgerMenu();
