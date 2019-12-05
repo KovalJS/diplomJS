@@ -164,7 +164,16 @@ const sendForm = () => {
                             thanksModalWindow.style.display = 'block';
                         
                             [...forma.elements].forEach((item) => {
-                                item.value = '';
+                                if (item.name === 'name' || item.name === 'phone') {
+                                    item.value = '';
+                                } else if (item.type === 'checkbox') {
+                                    item.checked = false;
+                                } else if (item) {
+                                    item.checked = false;
+                                    if (item.getAttribute('checked') !== null) {
+                                        item.checked = true; 
+                                    }
+                                }
                             });
                         }
 
