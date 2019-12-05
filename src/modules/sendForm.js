@@ -51,14 +51,22 @@ const sendForm = () => {
     };
     applyStyle(); 
     
+    
     const confirmError = (target) => {
         if (!target.querySelector('.confirm-error')) {
-            const personalData = target.querySelector('.personal-data');
+            const personalData = target.querySelector('.personal-data'),
+                chooseClub = target.querySelector('.choose-club');
             let confirmDiv = document.createElement('div');
             confirmDiv.classList.add('confirm-error');
-            confirmDiv.textContent = 'Необходимо подтвердить согласие!';
             confirmDiv.style.cssText = `font-size: 1rem; color: red;`;
-            personalData.insertAdjacentElement('afterend', confirmDiv);
+            if (personalData) {
+                confirmDiv.textContent = 'Необходимо подтвердить согласие!';
+                personalData.insertAdjacentElement('afterend', confirmDiv);
+            } else if (chooseClub) {
+                confirmDiv.textContent = 'Выберите клуб!';
+                chooseClub.appendChild(confirmDiv);
+            }
+
         } 
     };
 
@@ -66,6 +74,12 @@ const sendForm = () => {
         if(target.querySelector('.confirm-error')) {
             target.querySelector('.confirm-error').remove();
         }
+    };
+
+    const radioChecked = (footerForm) => {
+        for (var i=0; i<footerForm.length; i++)
+        if (footerForm[i].checked) return true;
+        return false; 
     };
      
     const statusMessage = document.createElement('div');
@@ -78,16 +92,29 @@ const sendForm = () => {
                 const checkboxElem = target.querySelector('input[type="checkbox"]'),
                     radioElem = target.querySelector('input[type="radio"]'),
                     thanksModalWindow = document.querySelector('#thanks'),
-                    thanksFormContent = thanksModalWindow.querySelector('.form-content');
+                    thanksFormContent = thanksModalWindow.querySelector('.form-content'),
+                    footerForm = document.querySelector('#footer_form'),
+                    chooseClub = footerForm.querySelector('.choose-club'),
+                    btnCallbackForm = footerForm.querySelector('.callback-btn');
                 
                 event.preventDefault();
                 const formData = new FormData(forma);
                 let body = {},
                     i = 0;
         
+                  
+                if (event.target === footerForm) {
+                    if (!radioChecked(footerForm)) {
+                        confirmError(footerForm);
+                        return;
+                    } else {
+                        confirmSuccess(footerForm);
+                    }
+                }    
+
                 if (!valid(event)) {
                     return;
-                }                
+                }  
                     
                 formData.forEach((val, key) => {
                     if (key !==  'form_name') {
