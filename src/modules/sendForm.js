@@ -27,11 +27,14 @@ const sendForm = () => {
                 elem.classList.remove('error');
                 return true;
             } else if (elem.name === 'name' && elem.placeholder !== 'Промокод' && elem.value.trim() === '') {
+                elem.classList.add('error');
                 event.preventDefault();
                 return false;
             } else if (elem.name === 'message' && elem.value.trim() === '') {
                 event.preventDefault();
                 return false;
+            } else if (elem.name === 'name' && elem.placeholder !== 'Промокод' && elem.value.trim() !== '') {
+                elem.classList.remove('error');
             } 
         }
     };
@@ -44,7 +47,8 @@ const sendForm = () => {
             #card_order input.error,
             footer #callback_footer_form-phone.error,
             #banner-form input.error,
-            .popup .form-content input[type='tel'].error{
+            .popup .form-content input[type='tel'].error,
+            .popup .form-content input[type='text'].error{
                 border: 2px solid red;
             }
         `;
@@ -77,8 +81,9 @@ const sendForm = () => {
     };
 
     const radioChecked = (footerForm) => {
-        for (var i=0; i<footerForm.length; i++)
-        if (footerForm[i].checked) return true;
+        for (var i=0; i<footerForm.length; i++){
+            if (footerForm[i].checked) return true;
+        }
         return false; 
     };
      
@@ -90,12 +95,10 @@ const sendForm = () => {
             forma.addEventListener('submit', (event) => {
                 let target = event.target;
                 const checkboxElem = target.querySelector('input[type="checkbox"]'),
-                    radioElem = target.querySelector('input[type="radio"]'),
                     thanksModalWindow = document.querySelector('#thanks'),
                     thanksFormContent = thanksModalWindow.querySelector('.form-content'),
                     footerForm = document.querySelector('#footer_form'),
-                    chooseClub = footerForm.querySelector('.choose-club'),
-                    btnCallbackForm = footerForm.querySelector('.callback-btn');
+                    htmlId = document.querySelector('html').id;
                 
                 event.preventDefault();
                 const formData = new FormData(forma);
@@ -135,6 +138,10 @@ const sendForm = () => {
                 } else if (checkboxElem && !checkboxElem.checked){
                     confirmError(target);
                     return;
+                }
+
+                if (htmlId) {
+                    body['club-name'] = htmlId;
                 }
 
                 confirmSuccess(target);
