@@ -1,10 +1,14 @@
 const burgerMenu = () => {
     const hiddenLarge = document.querySelector('.hidden-large'),
-        topMenu = document.querySelector('.top-menu');
+        headerMain = document.querySelector('.header-main'),
+        topMenu = document.querySelector('.top-menu'),
+        imgBurger = topMenu.querySelector('img'),
+        popupMenu = document.querySelector('.popup-menu'),
+        imgPopupMenu = popupMenu.querySelector('img');
     let head = document.querySelector('.head'),
         headHiight = head.clientHeight,
         burgerWidthWindow = document.documentElement.clientWidth;
-   
+    
     window.addEventListener('resize', () => {
         burgerWidthWindow = document.documentElement.clientWidth;
         headHiight = head.clientHeight;
@@ -23,13 +27,27 @@ const burgerMenu = () => {
             topMenu.style.cssText = `
                 position: fixed;
                 top: 0;
-                z-index: 3000;
             `;
         } else if (windowHeight < headHiight && burgerWidthWindow < 768) {
             topMenu.style.cssText = `
                 position: none;
             `;
         }
+    });
+
+    headerMain.addEventListener('click', (event) => {
+        let target = event.target;
+        if (target === imgBurger) {
+            popupMenu.style.display = 'flex';
+        } else if (target === imgPopupMenu) {
+            popupMenu.style.display = 'none';
+        } 
+
+        target = target.parentNode;
+        if (target.tagName === 'LI') {
+            popupMenu.style.display = 'none';
+        }
+       
     });
 };
 
