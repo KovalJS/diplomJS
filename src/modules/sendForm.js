@@ -112,7 +112,8 @@ const sendForm = () => {
                     thanksModalWindow = document.querySelector('#thanks'),
                     thanksFormContent = thanksModalWindow.querySelector('.form-content'),
                     footerForm = document.querySelector('#footer_form'),
-                    htmlId = document.querySelector('html').id;
+                    htmlId = document.querySelector('html').id,
+                    priceTotal = document.querySelector('#price-total');
                 
                 event.preventDefault();
                 const formData = new FormData(forma);
@@ -163,7 +164,7 @@ const sendForm = () => {
 
                 postData(body)
                     .then ((response) => {
-                        if (response.status === 200) {
+                        if (response.status !== 200) {
                             throw new Error('status network not 200');
                         }
 
@@ -187,7 +188,9 @@ const sendForm = () => {
                                     }
                                 }  
                             });
-                            document.querySelector('#price-total').textContent = '1999';
+                            if (priceTotal) {
+                                priceTotal.textContent ='1999';
+                            }
                         }
 
                         statusMessage.textContent = '';
