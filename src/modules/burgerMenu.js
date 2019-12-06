@@ -13,6 +13,8 @@ const burgerMenu = () => {
         headSliderHeight = headSlider.clientHeight,
         burgerWidthWindow = document.documentElement.clientWidth;
     
+    totop.style.display = 'none'; 
+       
     window.addEventListener('resize', () => {
         burgerWidthWindow = document.documentElement.clientWidth;
         headHiight = head.clientHeight;
