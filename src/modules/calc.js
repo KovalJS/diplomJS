@@ -1,6 +1,7 @@
 const calc = () => {
     const calcForm = document.querySelector('#card_order'),
         priceTotal = document.querySelector('#price-total'),
+        priceMessage = document.querySelector('.price-message'),
         promotionalСode = 'ТЕЛО2019',
         schelkovo = {
             '1': 2999,
@@ -26,6 +27,10 @@ const calc = () => {
     }   
     
     const cards = (target) => {
+        if (priceMessage) {
+            targetValue = priceMessage.querySelector('input').value;
+        }
+        
         if(target.checked && target.name === 'card-type') {
             cardTypeVal = target.value;
         } else if(target.checked && target.name === 'club-name') {
@@ -39,7 +44,6 @@ const calc = () => {
             let target = event.target;
             cards(target);
             promo(targetValue,cardTypeVal,clubNameVal);
-            
         });
 
     }); 

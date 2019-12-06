@@ -163,7 +163,7 @@ const sendForm = () => {
 
                 postData(body)
                     .then ((response) => {
-                        if (response.status !== 200) {
+                        if (response.status === 200) {
                             throw new Error('status network not 200');
                         }
 
@@ -175,6 +175,7 @@ const sendForm = () => {
                             thanksModalWindow.style.display = 'block';
                         
                             [...forma.elements].forEach((item) => {
+                                
                                 if (item.name === 'name' || item.name === 'phone') {
                                     item.value = '';
                                 } else if (item.type === 'checkbox') {
@@ -184,8 +185,9 @@ const sendForm = () => {
                                     if (item.getAttribute('checked') !== null) {
                                         item.checked = true; 
                                     }
-                                }
+                                }  
                             });
+                            document.querySelector('#price-total').textContent = '1999';
                         }
 
                         statusMessage.textContent = '';
