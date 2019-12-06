@@ -113,7 +113,8 @@ const sendForm = () => {
                     thanksFormContent = thanksModalWindow.querySelector('.form-content'),
                     footerForm = document.querySelector('#footer_form'),
                     htmlId = document.querySelector('html').id,
-                    priceTotal = document.querySelector('#price-total');
+                    priceTotal = document.querySelector('#price-total'),
+                    cardOrder = document.querySelector('#card_order');
                 
                 event.preventDefault();
                 const formData = new FormData(forma);
@@ -167,7 +168,7 @@ const sendForm = () => {
                         if (response.status !== 200) {
                             throw new Error('status network not 200');
                         }
-
+                        
                         if (forma.id === 'form2' || forma.id === 'form1') {
                             forma.innerHTML = `<h4>Записаться на визит</h4>
                                                 <p>${successMessage}</p>`;

@@ -2,6 +2,7 @@ const calc = () => {
     const calcForm = document.querySelector('#card_order'),
         priceTotal = document.querySelector('#price-total'),
         priceMessage = document.querySelector('.price-message'),
+        cardLetoMzaika = calcForm.querySelector('#card_leto_mozaika').value,
         promotionalСode = 'ТЕЛО2019',
         schelkovo = {
             '1': 2999,
@@ -17,8 +18,8 @@ const calc = () => {
         };
     
     let promoDiv = calcForm.querySelector('.price-message'),
-        cardTypeVal,
-        clubNameVal,
+        cardTypeVal = '1',
+        clubNameVal = cardLetoMzaika,
         targetValue = '',
         inputDiv;
 
@@ -37,13 +38,17 @@ const calc = () => {
             clubNameVal = target.value;  
         }
     };
+
+    
    
     [...calcForm].forEach(target => {
         cards(target);
         target.addEventListener('click', (event) => {
             let target = event.target;
             cards(target);
-            promo(targetValue,cardTypeVal,clubNameVal);
+            if (target.name !== 'name' && target.name !== 'phone' && target.type !== 'checkbox') {
+                promo(targetValue,cardTypeVal,clubNameVal);
+            }
         });
 
     }); 
@@ -77,8 +82,8 @@ const calc = () => {
 
     promo(targetValue,cardTypeVal,clubNameVal);
 
-    calcForm.addEventListener('submit', () => {
-        setTimeout(() => {
+    calcForm.addEventListener('click', () => {
+        
             [...calcForm].forEach(target => {
                 cards(target);
             });
@@ -88,9 +93,10 @@ const calc = () => {
             }
             
             promo(targetValue,cardTypeVal,clubNameVal);
-        }, 10);  
+         
     });
 
+    
 };
 
 export default calc;
