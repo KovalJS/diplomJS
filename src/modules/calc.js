@@ -23,30 +23,27 @@ const calc = () => {
 
     if (promoDiv) {
         inputDiv = promoDiv.querySelector('input');
-    }    
-   
-    [...calcForm].forEach(item => {
-        if(item.checked && item.name === 'card-type') {
-            cardTypeVal = item.value;
-        } else if(item.checked && item.name === 'club-name') {
-            clubNameVal = item.value;
-        
+    }   
+    
+    const cards = (target) => {
+        if(target.checked && target.name === 'card-type') {
+            cardTypeVal = target.value;
+        } else if(target.checked && target.name === 'club-name') {
+            clubNameVal = target.value;  
         }
-
-        item.addEventListener('click', (event) => {
+    };
+   
+    [...calcForm].forEach(target => {
+        cards(target);
+        target.addEventListener('click', (event) => {
             let target = event.target;
-            
-            if(target.checked && target.name === 'card-type') {
-                cardTypeVal = target.value;
-            } else if(target.checked && target.name === 'club-name') {
-                clubNameVal = target.value;  
-            }
-
+            cards(target);
             promo(targetValue,cardTypeVal,clubNameVal);
             
         });
 
     }); 
+
 
     const promo = (targetValue,cardTypeVal,clubNameVal) => {
         if (targetValue === undefined) {
@@ -55,9 +52,9 @@ const calc = () => {
 
         if (targetValue.toUpperCase() === promotionalСode && priceTotal) {
             if (clubNameVal === 'mozaika') { 
-                priceTotal.textContent = Math.floor(mozaika[cardTypeVal] * 0.30); 
+                priceTotal.textContent = Math.floor(mozaika[cardTypeVal] - (mozaika[cardTypeVal] * 0.30)); 
             } else if (clubNameVal === 'schelkovo') { 
-                priceTotal.textContent = Math.floor(schelkovo[cardTypeVal] * 0.30); 
+                priceTotal.textContent = Math.floor(schelkovo[cardTypeVal] - (schelkovo[cardTypeVal] * 0.30)); 
             }
         } else if (targetValue.toUpperCase() !== promotionalСode && priceTotal){
             if (clubNameVal === 'mozaika') { 
@@ -79,13 +76,8 @@ const calc = () => {
 
     calcForm.addEventListener('submit', () => {
         setTimeout(() => {
-            [...calcForm].forEach(item => {
-                if(item.checked && item.name === 'card-type') {
-                    cardTypeVal = item.value;
-                } else if(item.checked && item.name === 'club-name') {
-                    clubNameVal = item.value;
-                
-                }
+            [...calcForm].forEach(target => {
+                cards(target);
             });
             
             if (inputDiv) {

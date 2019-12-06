@@ -8,33 +8,38 @@ const sendForm = () => {
         for (let elem of item.elements) {
             elem.required = '';
             elem.addEventListener('input', () => {
-                if (elem.name === 'name' && elem.placeholder !== 'Промокод'|| elem.name === 'message') {
+                if (elem.name === 'name' && elem.placeholder !== 'Промокод') {
                     elem.value = elem.value.replace(/[^а-яё\s]/ig, '');
+                } else if (elem.name === 'name' && elem.placeholder === 'Промокод') {
+                    elem.value = elem.value.replace(/[^а-яё\s\d]/ig, '');
                 }
             });  
         } 
     });
+
+    const classRemove = (elem) => {
+        elem.classList.remove('error');
+    };
+
+    const classAdd = (elem) => {
+        elem.classList.add('error');
+    };
     
     const valid = (event) => {
         for (let elem of event.target.elements) {
             if (elem.name === 'phone' && !patternPhone.test(elem.value)) {
-                event.preventDefault();
-                elem.classList.add('error');
                 elem.value = '+7 (XXX) XXX-XX-XX';
                 elem.style.color = 'red';
+                classAdd(elem);
                 return false;   
             } else if (elem.name === 'phone' || patternPhone.test(elem.value)) {
-                elem.classList.remove('error');
+                classRemove(elem);
                 return true;
             } else if (elem.name === 'name' && elem.placeholder !== 'Промокод' && elem.value.trim() === '') {
-                elem.classList.add('error');
-                event.preventDefault();
-                return false;
-            } else if (elem.name === 'message' && elem.value.trim() === '') {
-                event.preventDefault();
+                classAdd(elem);
                 return false;
             } else if (elem.name === 'name' && elem.placeholder !== 'Промокод' && elem.value.trim() !== '') {
-                elem.classList.remove('error');
+                classRemove(elem);
             } 
         }
     };
@@ -61,8 +66,10 @@ const sendForm = () => {
             const personalData = target.querySelector('.personal-data'),
                 chooseClub = target.querySelector('.choose-club');
             let confirmDiv = document.createElement('div');
+
             confirmDiv.classList.add('confirm-error');
             confirmDiv.style.cssText = `font-size: 1rem; color: red;`;
+
             if (personalData) {
                 confirmDiv.textContent = 'Необходимо подтвердить согласие!';
                 personalData.insertAdjacentElement('afterend', confirmDiv);
