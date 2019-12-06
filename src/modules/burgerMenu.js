@@ -11,6 +11,7 @@ const burgerMenu = () => {
         headHiight = head.clientHeight,
         topMenuHeight = topMenu.clientHeight,
         headSliderHeight = headSlider.clientHeight,
+        sumHeightBlok1 = headHiight + topMenuHeight + headSliderHeight,
         burgerWidthWindow = document.documentElement.clientWidth;
     
     totop.style.display = 'none'; 
@@ -38,9 +39,9 @@ const burgerMenu = () => {
             topMenu.style.cssText = `
                 position: none;
             `;
-        } else if (windowHeight >= (headHiight + topMenuHeight + headSliderHeight)) {
+        } else if (windowHeight >= (sumHeightBlok1)) {
             totop.style.display = 'block';
-        } else if (windowHeight < (headHiight + topMenuHeight + headSliderHeight)) {
+        } else if (windowHeight < (sumHeightBlok1)) {
             totop.style.display = 'none';
         }
     });

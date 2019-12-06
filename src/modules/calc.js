@@ -44,17 +44,16 @@ const calc = () => {
 
     }); 
 
-
     const promo = (targetValue,cardTypeVal,clubNameVal) => {
         if (targetValue === undefined) {
             targetValue = '';
         }
-
+        
         if (targetValue.toUpperCase() === promotionalСode && priceTotal) {
             if (clubNameVal === 'mozaika') { 
                 priceTotal.textContent = Math.floor(mozaika[cardTypeVal] - (mozaika[cardTypeVal] * 0.30)); 
             } else if (clubNameVal === 'schelkovo') { 
-                priceTotal.textContent = Math.floor(schelkovo[cardTypeVal] - (schelkovo[cardTypeVal] * 0.30)); 
+                priceTotal.textContent = Math.floor(schelkovo[cardTypeVal] - (schelkovo[cardTypeVal] * 0.30));
             }
         } else if (targetValue.toUpperCase() !== promotionalСode && priceTotal){
             if (clubNameVal === 'mozaika') { 

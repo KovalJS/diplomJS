@@ -93,7 +93,14 @@ const sendForm = () => {
         }
         return false; 
     };
-     
+
+    const formaStyle = (forma) => {
+        forma.style.cssText = `
+            font-size: 21px;
+            color: #ffd11a; 
+            text-transform: uppercase;`;
+    };
+      
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = 'font-size: 2rem; color: #ffd11a';
 
@@ -163,10 +170,7 @@ const sendForm = () => {
                         if (forma.id === 'form2' || forma.id === 'form1') {
                             forma.innerHTML = `<h4>Записаться на визит</h4>
                                                 <p>${successMessage}</p>`;
-                            forma.querySelector('p').style.cssText = `
-                            font-size: 21px;
-                            color: #ffd11a; 
-                            text-transform: uppercase;`;                    
+                            formaStyle(forma);                                     
                         } else {
                             thanksModalWindow.style.display = 'block';
                         
@@ -191,19 +195,13 @@ const sendForm = () => {
                             forma.innerHTML = `<h4>Записаться на визит</h4>
                                                 <p>${errorMessage}</p>
                                                 <p>Отправка не удалась!</p>`;
-                            forma.style.cssText = `
-                            font-size: 21px;
-                            color: #ffd11a; 
-                            text-transform: uppercase;`;                    
+                            formaStyle(forma);                                      
                         } else {
                             thanksModalWindow.style.display = 'block';
                             
                             thanksFormContent.innerHTML = `<h4>Ошибка</h4>
                                                         <p>Отправка не удалась!</p>`;
-
-                            thanksFormContent.style.cssText = `
-                            font-size: 21px;
-                            color: #ffd11a; 
+                            thanksFormContent.style.cssText = ` 
                             display: block;`;                            
                         }
                         statusMessage.textContent = '';
