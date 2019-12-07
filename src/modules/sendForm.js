@@ -12,6 +12,8 @@ const sendForm = () => {
                     elem.value = elem.value.replace(/[^а-яё\s]/ig, '');
                 } else if (elem.name === 'name' && elem.placeholder === 'Промокод') {
                     elem.value = elem.value.replace(/[^а-яё\s\d]/ig, '');
+                } else if (elem.name === 'phone') {
+                    elem.value = elem.value.replace(/[^\+\-\(\)\s\d]/ig, '');
                 }
             });  
         } 
@@ -28,7 +30,7 @@ const sendForm = () => {
     const valid = (event) => {
         for (let elem of event.target.elements) {
             if (elem.name === 'phone' && !patternPhone.test(elem.value)) {
-                elem.value = '+7 (XXX) XXX-XX-XX';
+                elem.placeholder = '+7 (XXX) XXX-XX-XX';
                 elem.style.color = 'red';
                 classAdd(elem);
                 return false;   

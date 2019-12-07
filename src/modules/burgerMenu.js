@@ -12,7 +12,9 @@ const burgerMenu = () => {
         topMenuHeight = topMenu.clientHeight,
         headSliderHeight = headSlider.clientHeight,
         sumHeightBlok1 = headHiight + topMenuHeight + headSliderHeight,
-        burgerWidthWindow = document.documentElement.clientWidth;
+        burgerWidthWindow = document.documentElement.clientWidth,
+        scrolled,
+        time;
     
     totop.style.display = 'none'; 
        
@@ -29,7 +31,7 @@ const burgerMenu = () => {
 
     window.addEventListener('scroll', () => {
         let windowHeight = document.documentElement.scrollTop;
-
+        
         if (windowHeight >= headHiight && burgerWidthWindow < 768) {
             topMenu.style.cssText = `
                 position: fixed;
@@ -60,6 +62,25 @@ const burgerMenu = () => {
         }
        
     });
+
+    const scrollToTop = () => {
+        if (scrolled > 0) {
+            window.scrollTo(0, scrolled);
+            scrolled = scrolled - 20;
+            time = setTimeout(scrollToTop, 5);
+        } else {
+            clearTimeout(time);
+            window.scrollTo(0,0);
+        }
+    }; 
+
+    totop.addEventListener('click', (event) => {
+        event.preventDefault();
+        scrolled = window.pageYOffset;
+        scrollToTop();
+    });
+
+    
 };
 
 export default burgerMenu;
