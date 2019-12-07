@@ -2,7 +2,6 @@ const calc = () => {
     const calcForm = document.querySelector('#card_order'),
         priceTotal = document.querySelector('#price-total'),
         priceMessage = document.querySelector('.price-message'),
-        cardLetoMzaika = calcForm.querySelector('#card_leto_mozaika').value,
         promotionalСode = 'ТЕЛО2019',
         schelkovo = {
             '1': 2999,
@@ -16,6 +15,11 @@ const calc = () => {
             '9': 13900,
             '12': 19900
         };
+
+    let cardLetoMzaika = calcForm.querySelector('#card_leto_mozaika');    
+    if (cardLetoMzaika) {
+        cardLetoMzaika = cardLetoMzaika.value;
+    }    
     
     let promoDiv = calcForm.querySelector('.price-message'),
         cardTypeVal = '1',
@@ -23,6 +27,7 @@ const calc = () => {
         targetValue = '',
         inputDiv;
 
+        
     if (promoDiv) {
         inputDiv = promoDiv.querySelector('input');
     }   
