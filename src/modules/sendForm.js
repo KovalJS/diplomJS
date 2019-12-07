@@ -155,8 +155,8 @@ const sendForm = () => {
                     confirmError(target);
                     return;
                 }
-
-                if (htmlId) {
+                
+                if (htmlId && forma === cardOrder && forma !== footerForm) {
                     body['club-name'] = htmlId;
                 }
 
